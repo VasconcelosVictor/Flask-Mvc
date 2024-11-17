@@ -1,4 +1,5 @@
 from src.models.db.repositores.peaple_repository import PeapleRepository
+from src.erros.types.http_bad_request import HttpBadRequestError
 class PersonRegisterController:
     def __init__(self, ) -> None:
         self.__person_repository = PeapleRepository()
@@ -13,7 +14,7 @@ class PersonRegisterController:
     def __validate_person_registry(self, person_name : str) -> None:
         person = self.__person_repository.get_person_by_name(person_name)
         if person:
-            raise Exception("Person already registered")
+            raise HttpBadRequestError("Person already registered")
 
     def __insert_person(self, person_name : str, person_age : int) -> None:
         self.__person_repository.registry_person(person_name, person_age)
